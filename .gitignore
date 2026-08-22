@@ -3,3 +3,12 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 lean/.lake/
+
+# never mirror manuscript-side documents into the public supplement
+*.pdf
+!paper/figs/*.pdf
+!lean/**
+paper/*.txt
+paper/*.md
+SUBMISSION.md
+declarations.txt
