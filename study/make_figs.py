@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """Figures for the Letter from study/results/*.json only.
 
-Fig. 1 left panel shows three representative diagnostic pairs, not all eight
-in l02["curves"] (that gave 16 overlapping lines with duplicate legend
-entries in a 3.5-inch panel): LP2 (symmetric mixtures, informative only in
-the even/dispersion diagnostic), LP3 A2L (both diagnostics informative), and
-LP4 A1L-vs-A1R (mirror-skew pair, informative only in the odd diagnostic).
-Fig. 1 right panel shows four dictionaries per pair -- H, M, P, E -- because
-the manuscript's central finding is that the free even pair E matches or
-beats H on the symmetric pairs (LP1, LP2); a 3-bar panel would hide that.
+Three separate figures, not two with panels: Elsevier's artwork instructions
+forbid combining different graphs into one image, so the diagnostic curves and
+the captured-fraction bars are emitted as Fig. 1 and Fig. 2 and the
+contamination curves as Fig. 3, each its own file.
+
+Fig. 1 shows three representative diagnostic pairs, not all eight in
+l02["curves"] (that gave 16 overlapping lines with duplicate legend entries in
+a 3.5-inch panel): LP2 (symmetric mixtures, informative only in the
+even/dispersion diagnostic), LP3 A2L (both diagnostics informative), and LP4
+A1L-vs-A1R (mirror-skew pair, informative only in the odd diagnostic).
+Fig. 2 shows four dictionaries per pair -- H, M, P, E -- because the
+manuscript's central finding is that the free even pair E matches or beats H on
+the symmetric pairs (LP1, LP2); a 3-bar panel would hide that.
 """
 from __future__ import annotations
 
@@ -29,7 +34,7 @@ FIGS.mkdir(parents=True, exist_ok=True)
 plt.rcParams.update({"font.size": 8, "axes.labelsize": 8, "legend.fontsize": 6.5, "figure.dpi": 200})
 
 # ---------------------------------------------------------------------------
-# Fig. 1: diagnostic curves (left) and captured fraction of H/M/P/E (right)
+# Fig. 1: diagnostic curves; Fig. 2: captured fraction of H/M/P/E
 # ---------------------------------------------------------------------------
 l02, l04 = load_result("l02"), load_result("l04")
 # Authored at the manuscript's final printed width (I9/F3): \linewidth in
@@ -38,12 +43,11 @@ l02, l04 = load_result("l02"), load_result("l04")
 # at 6.2 pt against 12 pt body text. Authoring at the printed width keeps the
 # type at its nominal size; the aspect ratio is relaxed a little (2.0 instead of
 # 2.33) so the outside-axes legend and the rotated tick labels keep their room.
-# Stacked, not side by side: at the single-column width of the journal two panels
-# abreast leave each ~2.4 in, which crowds the q axis and the seven bar groups.
-# Width is set so the tight-trimmed PDF matches \linewidth (390 pt) unscaled.
-fig, (a1, a2) = plt.subplots(2, 1, figsize=(5.45, 5.2))
+# Width is set so the tight-trimmed PDF matches \linewidth (390 pt) unscaled;
+# each figure keeps that width and takes the height one panel needs.
+fig1, a1 = plt.subplots(figsize=(5.45, 2.7))
 
-# Left panel (R14-1): Delta-sigma=0 (LP2), both-informative (LP3 A2L), and
+# Fig. 1 (R14-1): Delta-sigma=0 (LP2), both-informative (LP3 A2L), and
 # Delta-nu=0 (LP4 A1L-vs-A1R) cases -- the three the paper argues from. Same
 # color per pair, solid = Delta-nu, dashed = Delta-sigma, so the reader can
 # tell at a glance which diagnostic carries the signal for each pair.
@@ -86,8 +90,14 @@ a1.axhline(0, color="grey", lw=0.6)
 a1.set_xlabel("q")
 a1.set_ylabel("Δν(q), Δσ(q)")
 a1.legend(ncol=2, fontsize=6)
+fig1.tight_layout()
+fig1.savefig(FIGS / "fig1_diagnostics.pdf", bbox_inches="tight")
+fig1.savefig(FIGS / "fig1_diagnostics.png", bbox_inches="tight")
+plt.close(fig1)
 
-# Right panel (R14-2): four bars per pair -- H, M, P, E -- at the 3-column
+fig2, a2 = plt.subplots(figsize=(5.45, 2.7))
+
+# Fig. 2 (R14-2): four bars per pair -- H, M, P, E -- at the 3-column
 # budget. P.frac is ~1e-27 on LP1/LP2 (an admissible odd dictionary applied
 # to a symmetric-vs-symmetric pair correctly captures ~nothing) and E.frac
 # is ~1e-27 on both LP4 pairs (an even dictionary is uninformative on a pair
@@ -136,13 +146,13 @@ a2.set_xticklabels([SHORT_NAME[n] for n in names], rotation=0, ha="center", font
 a2.set_ylabel("J / J∞ (3 columns)")
 a2.set_ylim(0, 1.02)
 a2.legend(fontsize=6.5, ncol=4, loc="lower center", bbox_to_anchor=(0.5, 1.0), frameon=False)
-fig.tight_layout(h_pad=1.8)
-fig.savefig(FIGS / "fig1_diagnostics.pdf", bbox_inches="tight")
-fig.savefig(FIGS / "fig1_diagnostics.png", bbox_inches="tight")
-plt.close(fig)
+fig2.tight_layout()
+fig2.savefig(FIGS / "fig2_budget.pdf", bbox_inches="tight")
+fig2.savefig(FIGS / "fig2_budget.png", bbox_inches="tight")
+plt.close(fig2)
 
 # ---------------------------------------------------------------------------
-# Fig. 2: contamination collapse of integer dictionaries (LC3)
+# Fig. 3: contamination collapse of integer dictionaries (LC3)
 # ---------------------------------------------------------------------------
 # Legend labels are mathtext, not raw dict keys (study/results/l03.json's
 # auc_table keys, e.g. "mixed {x,|x|^.75,sgn|x|^.75}", are Python
@@ -156,7 +166,7 @@ LEGEND_LABEL = {
     "mixed {x,|x|^.75,sgn|x|^.75}": r"mixed $\{x, |x|^{0.75}, \mathrm{sgn}(x)|x|^{0.75}\}$",
 }
 l03 = load_result("l03")
-fig, ax = plt.subplots(figsize=(3.4, 2.6))
+fig3, ax = plt.subplots(figsize=(3.4, 2.6))
 for k, rows in l03["auc_table"].items():
     a = [r["auc"] for r in rows]
     lo = [r["ci_lo"] for r in rows]
@@ -168,9 +178,9 @@ ax.set_xlabel("contamination fraction ε")
 ax.set_ylabel("AUC (N = 256)")
 ax.set_ylim(0.45, 1.02)
 ax.legend()
-fig.tight_layout()
-fig.savefig(FIGS / "fig2_contamination.pdf")
-fig.savefig(FIGS / "fig2_contamination.png")
-plt.close(fig)
+fig3.tight_layout()
+fig3.savefig(FIGS / "fig3_contamination.pdf")
+fig3.savefig(FIGS / "fig3_contamination.png")
+plt.close(fig3)
 
 print("written", sorted(p.name for p in FIGS.iterdir()))
