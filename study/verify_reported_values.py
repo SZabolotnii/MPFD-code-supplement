@@ -21,7 +21,7 @@ sys.path.insert(0, str(STUDY))
 import make_tex  # noqa: E402
 from make_tex import OUT, build  # noqa: E402
 
-GENERATED_FILES = ("numbers.tex", "table1.tex", "table2.tex", "table3.tex", "table4.tex")
+GENERATED_FILES = ("numbers.tex", "table1.tex", "table2.tex", "table3.tex", "table4.tex", "table5.tex")
 
 #: (manuscript root, generated dir, generator, files) -- paper/ and paper/paper_ua/ are
 #: both under the root, so the Ukrainian mirror is linted by the same walk.

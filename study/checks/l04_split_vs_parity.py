@@ -44,10 +44,20 @@ for name, (lm, ln) in pairs.items():
     H_diag = best(om, on, lambda a: B.halfline([a], [a]), [(a,) for a in GRID])
     E = best(om, on, lambda a, b: [B.LINEAR, B.Column("abs", float(a)), B.Column("abs", float(b))],
              [(a, b) for i, a in enumerate(GRID) for b in GRID[i + 1:]])
-    for r in (H, M, Pp, H_diag, E):
+    # The classical {x, x^2, x^3} control. Sec. 2 of the manuscript names it the control of the
+    # budget experiment and until now only the contamination experiment carried it, so the
+    # headline table had no baseline in it. It has no free exponent, so there is nothing to
+    # search: one population evaluation, reported at whatever cond(F) it lands on. That cond is
+    # kept rather than screened -- an ill-conditioned control is a result about the control, and
+    # the COND_LIMIT screen exists to stop a grid search from *selecting* a singular optimum.
+    # best() would screen it away instead of reporting it, so evaluate it directly.
+    ccols = B.classical(3)
+    cd = P.deflection(P.population_moments(ccols, om), P.population_moments(ccols, on))
+    C = {"J": cd.J, "args": [], "cond": cd.cond, "n_excluded": 0}
+    for r in (H, M, Pp, H_diag, E, C):
         r["frac"] = r["J"] / jinf
     diag_minus_M_rel = abs(H_diag["J"] - M["J"]) / M["J"]
-    row = {"Delta": delta, "J_inf": jinf, "H": H, "M": M, "P": Pp, "H_diag": H_diag, "E": E,
+    row = {"Delta": delta, "J_inf": jinf, "H": H, "M": M, "P": Pp, "H_diag": H_diag, "E": E, "C": C,
            "gain_H_over_M_pct": 100 * (H["J"] - M["J"]) / M["J"],
            "gain_H_over_E_pct": 100 * (H["J"] - E["J"]) / E["J"],
            "diag_minus_M_rel": diag_minus_M_rel,

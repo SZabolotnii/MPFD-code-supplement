@@ -1,0 +1,54 @@
+{
+  "df_population": 3.0,
+  "dictionary": "classical {x,x2,x3}",
+  "admissible_exponents": [
+    1.0
+  ],
+  "inadmissible_exponents": [
+    2.0,
+    3.0
+  ],
+  "floor_dictionary": "linear {x}",
+  "J_pop_floor": 0.00022499437514059332,
+  "cond_floor": 1.0,
+  "n": [
+    1000,
+    10000,
+    100000,
+    1000000
+  ],
+  "median": [
+    0.0024794683139571787,
+    0.0005946632016044096,
+    0.0003187216094974393,
+    0.0002457404111996293
+  ],
+  "excess_over_floor": [
+    0.0022544739388165856,
+    0.0003696688264638163,
+    9.372723435684596e-05,
+    2.0746036059035973e-05
+  ],
+  "observed_decay_per_decade": [
+    6.098631470720609,
+    3.944091906695796,
+    4.517838207266728
+  ],
+  "single_column_rate_exponent": 0.33333333333333326,
+  "predicted_decay_per_decade_min": 2.1544346900318834,
+  "ratio_to_floor": [
+    11.020134669623724,
+    2.643013636375663,
+    1.4165759001676295,
+    1.0922069098219558
+  ],
+  "reading": "the empirical criterion of the inadmissible dictionary converges downward to the population criterion of its largest admissible sub-dictionary; the excess falls at least as fast as the single-column bound of Prop. 3. Diagnostic only: no registered criterion, threshold, seed, size or scenario is changed.",
+  "_meta": {
+    "check": "d01",
+    "git_sha": "78d45ca",
+    "timestamp": "2026-08-26T13:10:59",
+    "seed": 20260821,
+    "numpy": "2.4.4",
+    "scipy": "1.17.1"
+  }
+}

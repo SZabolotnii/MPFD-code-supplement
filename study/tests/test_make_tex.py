@@ -46,6 +46,11 @@ from verify_reported_values import run_checks
 #                 -> *1e5 = -6.7808... -> +.2f -6.78 (fix round 2 / item 2)
 #   LC6 (l06):    first-split hill_alpha_hat = 7.289726508292674 -> .2f 7.29
 #                 n_recordings_per_class = 1 (int)
+#   LC7 (l07):    recording_level.chosen_vs_classical.mean_diff = 0.015567412933745948
+#                 -> +.3f +0.016 (the headline; the dictionary on each fold was chosen on the
+#                 training files by J alone, so this number carries no test-set selection)
+#                 recording_level.chosen_vs_classical.ci_lo = 0.005689896422547178 -> +.3f +0.006
+#                 n_positive = 12 of n_recordings = 14 (ints)
 PINNED_MACROS = [
     r"\newcommand{\identityErr}{9\times 10^{-16}}",             # LC1
     r"\newcommand{\nAlphaGrid}{37}",                             # LC2
@@ -63,6 +68,10 @@ PINNED_MACROS = [
     r"\newcommand{\feasDiffMixedMinusP}{-6.78}",                 # LC5 (fix round 2 / item 2)
     r"\newcommand{\tampereAlphaHat}{7.29}",                      # LC6
     r"\newcommand{\tampereNRecordings}{1}",                      # LC6
+    r"\newcommand{\ipixMeanDiff}{+0.016}",                       # LC7
+    r"\newcommand{\ipixDiffLo}{+0.006}",                         # LC7
+    r"\newcommand{\ipixNPositive}{12}",                          # LC7
+    r"\newcommand{\ipixNRecordings}{14}",                        # LC7
 ]
 
 

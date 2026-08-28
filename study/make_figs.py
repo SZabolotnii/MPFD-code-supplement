@@ -31,7 +31,10 @@ from _common import load_result  # noqa: E402
 
 FIGS = STUDY.parent / "paper" / "figs"
 FIGS.mkdir(parents=True, exist_ok=True)
-plt.rcParams.update({"font.size": 8, "axes.labelsize": 8, "legend.fontsize": 6.5, "figure.dpi": 200})
+plt.rcParams.update({"font.size": 8, "axes.labelsize": 8, "legend.fontsize": 6.5, "figure.dpi": 200,
+                     # Type 42 (TrueType), not matplotlib's default Type 3 bitmap: Elsevier's
+                     # PDF check flags Type 3, and submission_gates G4 reports it as REVIEW.
+                     "pdf.fonttype": 42, "ps.fonttype": 42})
 
 # ---------------------------------------------------------------------------
 # Fig. 1: diagnostic curves; Fig. 2: captured fraction of H/M/P/E

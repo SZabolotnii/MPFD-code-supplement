@@ -5,9 +5,10 @@ Reproducibility code for the Short Communication
 **Mixed-Parity Fractional Dictionaries for Moment-Based Discrimination** (S. Zabolotnii, 2026)
 
 This repository is deliberately separate from the manuscript repository. It contains the study
-library, the six pre-registered checks with their frozen JSON results, the generators that turn
-those results into the figures and the numeric macros of the paper, the value gate, and the
-Lean 4 formalisation. It contains no manuscript text.
+library, the seven pre-registered checks with their frozen JSON results, the exploratory pilots
+that preceded the last of them, the generators that turn those results into the figures and the
+numeric macros of the paper, the value gate, and the Lean 4 formalisation. It contains no
+manuscript text.
 
 ## What the paper claims, and which script establishes it
 
@@ -19,6 +20,7 @@ Lean 4 formalisation. It contains no manuscript text.
 | **Table 1** and **Fig. 1(b)**: captured fraction `J/J_∞` at a three-column budget for `H`, `M`, `P`, `E` over the seven-pair panel; gains of `H` over `M` and over `E`; **Table S3** (where the optima sit, grid-edge cells marked) | LC4 | `study/checks/l04_split_vs_parity.py` |
 | Exponent selection: oracle free odd pair versus the transition-polynomial path; mixed parity versus `P`; the feasible arm (**Table S4**) | LC5 | `study/checks/l05_exponent_selection.py` |
 | **Table S2**: real-data pair (Tampere drone recordings), two time splits, moving-block bootstrap, `n_recordings = 1` per class | LC6 | `study/checks/l06_tampere.py` |
+| **Table S5**: real sea clutter (IPIX Dartmouth 1993), clutter-only cells versus the documented target cell, leave-one-file-out over 14 recordings, the dictionary chosen on the training files by `J` alone | LC7 | `study/checks/l07_ipix.py` |
 | Prop. 1(b) and Prop. 3, algebraic core (**Table S1**) | — | `lean/MCP/Parity.lean`, `lean/MCP/Schur.lean`, audit in `lean/Audit.lean` |
 
 Registered thresholds and the dated post-run annotations are kept in separate sections of
@@ -54,12 +56,29 @@ python3 checks/l02_parity.py                    # ~1 min
 python3 checks/l03_admissibility.py             # minutes (n up to 1e6, 30 seeds)
 python3 checks/l04_split_vs_parity.py           # ~1 min
 python3 checks/l05_exponent_selection.py        # minutes
+python3 checks/l07_ipix.py                      # ~40 min (14 folds x 4 grids)
 python3 make_figs.py && python3 make_tex.py     # paper/figs, paper/generated
 python3 verify_reported_values.py               # PASS iff the committed fragments are current
 ```
 
 Re-running a check overwrites `results/l0N.json`; compare with `git diff` to see that the
 numbers reproduce (floating-point noise in the last digits is expected across platforms).
+
+`l07_ipix.py` needs the 14 stare-mode files of the public McMaster IPIX Dartmouth 1993
+database (<https://soma.ece.mcmaster.ca/ipix/dartmouth/datasets.html>, the ones listed as
+carrying a target); point `MPFD_IPIX_RAW` at the directory holding them, or place them under
+`$RESEARCH_DATA_ROOT/store/ipix-dartmouth-1993/data`. The 8-bit ADC samples are **unsigned**:
+read as `int8` the clutter shows a kurtosis near 114, which is wrap-around and not sea clutter --
+`mcp/data/ipix.py` views them as `uint8` and centres at 127.5. Without the files the check is
+skipped; the frozen `results/l07.json` is included.
+
+`study/pilots/` holds the three exploratory pilots that preceded LC7, each with its pass criteria
+written down before its code: partial-discharge antenna signals and CWRU bearing vibration, both
+of which failed the gain criterion and are **not** used in the manuscript, and the IPIX pilot that
+became LC7. The PD failure is instructive rather than incidental -- the mechanism is fully present
+there, yet the classical control still wins, because the heavy tail is the class difference itself
+rather than a contaminant common to both classes, so the deflection criterion and AUC rank the
+exponents in opposite directions.
 
 `l06_tampere.py` needs the raw IQ recordings of the public Tampere dataset
 (doi:10.5281/zenodo.4264467); point `MPFD_TAMPERE_RAW` at the directory holding
