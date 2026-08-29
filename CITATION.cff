@@ -6,8 +6,8 @@ authors:
   - family-names: "Zabolotnii"
     given-names: "Serhii"
     orcid: "https://orcid.org/0000-0003-0242-2234"
-version: "0.1.0"
-date-released: "2026-08-22"
+version: "1.1.0"
+date-released: "2026-08-29"
 license: MIT
 keywords:
   - "moment-based discrimination"
@@ -19,8 +19,7 @@ keywords:
   - "PATP"
   - "Lean"
 repository-code: "https://github.com/SZabolotnii/MPFD-code-supplement"
-doi: "10.5281/zenodo.22057478"
-identifiers:
-  - type: doi
-    value: "10.5281/zenodo.22057477"
-    description: "Concept DOI, resolves to the latest version"
+# The concept DOI. It resolves to whichever version is current, so it stays correct inside an
+# archived snapshot; a version DOI does not, and the v1.0.0 archive shipped carrying its own.
+# Each release also gets a version DOI, minted by Zenodo and listed on the record itself.
+doi: "10.5281/zenodo.22057477"
