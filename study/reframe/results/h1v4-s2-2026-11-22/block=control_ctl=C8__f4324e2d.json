@@ -1,0 +1,21 @@
+{
+  "cell": "block=control_ctl=C8__f4324e2d",
+  "params": {
+    "block": "control",
+    "ctl": "C8"
+  },
+  "seconds": 0.157,
+  "values": {
+    "cache_sha256": "569e05a6c406969733c1a4645c244876b4dbba7c60363f3495ec5fce46f728f4",
+    "n_flights": 29.0,
+    "sd_ratio": 2.375136962037416,
+    "sizes": [
+      33563,
+      26586,
+      56388,
+      58969
+    ],
+    "split_repeat": 1.0
+  },
+  "written": "2026-11-22T16:42:54+00:00"
+}

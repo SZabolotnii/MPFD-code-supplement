@@ -1,0 +1,12 @@
+{
+  "cell": "block=control_ctl=C10__4faf5ceb",
+  "params": {
+    "block": "control",
+    "ctl": "C10"
+  },
+  "seconds": 10.907,
+  "values": {
+    "maxerr": 0.0021186637131387354
+  },
+  "written": "2026-11-22T16:43:04+00:00"
+}

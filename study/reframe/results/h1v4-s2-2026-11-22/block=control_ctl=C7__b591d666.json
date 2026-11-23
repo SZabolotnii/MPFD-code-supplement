@@ -1,0 +1,15 @@
+{
+  "cell": "block=control_ctl=C7__b591d666",
+  "params": {
+    "block": "control",
+    "ctl": "C7"
+  },
+  "seconds": 0.1,
+  "values": {
+    "c0_exact_x1e3": 2.205307642576592,
+    "c0_relerr": 3.599988429062372e-06,
+    "maxz_mom": 0.9118759211373864,
+    "maxz_tail": 2.5167603552879023
+  },
+  "written": "2026-11-22T16:42:53+00:00"
+}

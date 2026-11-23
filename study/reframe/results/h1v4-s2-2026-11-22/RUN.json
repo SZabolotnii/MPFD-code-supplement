@@ -1,0 +1,18 @@
+{
+  "run_id": "h1v4-s2-2026-11-22",
+  "spec": "study/reframe/spec_s2.py",
+  "spec_git": "b24a402",
+  "finished": "2026-11-22T16:59:21+00:00",
+  "python": "3.13.12",
+  "cells_total": 32,
+  "cells_computed": 32,
+  "cells_reused": 0,
+  "grid_seconds": 976.5,
+  "controls": [
+    "C6 window MC vs exact CF (a* = 4)",
+    "C7 t3 sampler, tail constant and moments",
+    "C8 RflyMAD pools and flight split",
+    "C9 winsorizer uses training data only",
+    "C10 LePage prediction vs symmetric stable CDF"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "cell": "block=control_ctl=C4__0f8f43d1",
+  "params": {
+    "block": "control",
+    "ctl": "C4"
+  },
+  "seconds": 3.463,
+  "values": {
+    "pos_opp": 0.50395,
+    "pos_same": 1.0
+  },
+  "written": "2026-11-22T08:51:57+00:00"
+}

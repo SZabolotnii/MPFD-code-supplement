@@ -1,0 +1,18 @@
+{
+  "run_id": "h1v4-2026-11-22",
+  "spec": "study/reframe/spec_h1v4.py",
+  "spec_git": "55d2954",
+  "finished": "2026-11-22T09:15:23+00:00",
+  "python": "3.13.12",
+  "cells_total": 52,
+  "cells_computed": 4,
+  "cells_reused": 48,
+  "grid_seconds": 1404.5,
+  "controls": [
+    "C1 CF engine vs normal formula (clean windows)",
+    "C2 CF engine vs brute-force MC (contaminated windows)",
+    "C3 stable CDF vs scipy levy_stable",
+    "C4 H sampler: same parity positive, opposite symmetric fair",
+    "C5 population moments vs 4e6-draw sample"
+  ]
+}

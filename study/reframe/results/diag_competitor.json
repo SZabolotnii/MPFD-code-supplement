@@ -1,0 +1,32 @@
+{
+ "oe_a2.4_bal": {
+  "pos_full": 0.8733333333333333,
+  "pos_reduced": 0.98,
+  "within_P4_band_reduced": false
+ },
+ "oe_a2.4_plus": {
+  "pos_full": 0.8833333333333333,
+  "pos_reduced": 0.98,
+  "within_P4_band_reduced": false
+ },
+ "oe_a2.4_minus": {
+  "pos_full": 0.8,
+  "pos_reduced": 0.95,
+  "within_P4_band_reduced": false
+ },
+ "oe_a4.0_bal": {
+  "pos_full": 0.21,
+  "pos_reduced": 0.66,
+  "within_P4_band_reduced": false
+ },
+ "oe_a4.0_plus": {
+  "pos_full": 0.4533333333333333,
+  "pos_reduced": 0.8166666666666667,
+  "within_P4_band_reduced": false
+ },
+ "oe_a4.0_minus": {
+  "pos_full": 0.16,
+  "pos_reduced": 0.43,
+  "within_P4_band_reduced": true
+ }
+}

@@ -1,0 +1,13 @@
+{
+  "cell": "block=control_ctl=C9__8cb19016",
+  "params": {
+    "block": "control",
+    "ctl": "C9"
+  },
+  "seconds": 0.001,
+  "values": {
+    "finite": 1.0,
+    "same_thr": 1.0
+  },
+  "written": "2026-11-22T16:42:54+00:00"
+}

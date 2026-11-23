@@ -1,0 +1,102 @@
+{
+ "oo": {
+  "file": "block=B_dict=oo__a356ad61.json",
+  "clean_top_diff": 4.103436282572206,
+  "n50": {
+   "medNstar": 57556480.47623326,
+   "med_ratio_eff": 1.4443731719041502,
+   "stored_onset_ratio": 1.444351808422585,
+   "pos": 0.55,
+   "n_ok": 39
+  },
+  "n200": {
+   "medNstar": 1200160138.6028037,
+   "med_ratio_eff": 1.0092296166503363,
+   "stored_onset_ratio": 1.0091847542858066,
+   "pos": 0.5,
+   "n_ok": 40
+  },
+  "n1000": {
+   "medNstar": 120876924514.53656,
+   "med_ratio_eff": 0.9968132783432333,
+   "stored_onset_ratio": 0.9967522699161779,
+   "pos": 0.45,
+   "n_ok": 40
+  }
+ },
+ "ee": {
+  "file": "block=B_dict=ee__53d0e556.json",
+  "clean_top_diff": 6.16455,
+  "n50": {
+   "medNstar": 46449666.48748632,
+   "med_ratio_eff": 0.9961306437418123,
+   "stored_onset_ratio": 1.2547319417885605,
+   "pos": 0.5,
+   "n_ok": 40
+  },
+  "n200": {
+   "medNstar": 1647597784.9756608,
+   "med_ratio_eff": 1.1254334935880332,
+   "stored_onset_ratio": 1.1253887153058875,
+   "pos": 0.6,
+   "n_ok": 40
+  },
+  "n1000": {
+   "medNstar": 20932672156.369965,
+   "med_ratio_eff": 0.9599803436336469,
+   "stored_onset_ratio": 0.959951587170019,
+   "pos": 0.35,
+   "n_ok": 40
+  }
+ },
+ "oe": {
+  "file": "block=B_dict=oe__484ce2b5.json",
+  "clean_top_diff": 6.16455,
+  "n50": {
+   "medNstar": 27718839.652034916,
+   "med_ratio_eff": 2.299403212675669,
+   "stored_onset_ratio": 2.2992941150176778,
+   "pos": 0.725,
+   "n_ok": 39
+  },
+  "n200": {
+   "medNstar": 414142955.3996483,
+   "med_ratio_eff": 1.6359657432404813,
+   "stored_onset_ratio": 1.649528265290782,
+   "pos": 0.825,
+   "n_ok": 40
+  },
+  "n1000": {
+   "medNstar": 1927973229.2887506,
+   "med_ratio_eff": 1.3606512601599496,
+   "stored_onset_ratio": 1.3606121255886514,
+   "pos": 0.8,
+   "n_ok": 40
+  }
+ },
+ "eo": {
+  "file": "block=B_dict=eo__dfe83c30.json",
+  "clean_top_diff": 4.103436282572206,
+  "n50": {
+   "medNstar": 101510788.75444797,
+   "med_ratio_eff": 0.9974678345612125,
+   "stored_onset_ratio": 0.9921587069457416,
+   "pos": 0.475,
+   "n_ok": 39
+  },
+  "n200": {
+   "medNstar": 5167284356.204216,
+   "med_ratio_eff": 1.010225446422284,
+   "stored_onset_ratio": 1.0101960457889718,
+   "pos": 0.525,
+   "n_ok": 40
+  },
+  "n1000": {
+   "medNstar": 55110910641.88418,
+   "med_ratio_eff": 1.017842327911485,
+   "stored_onset_ratio": 1.0177877213719992,
+   "pos": 0.575,
+   "n_ok": 40
+  }
+ }
+}

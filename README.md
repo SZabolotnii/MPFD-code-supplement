@@ -1,8 +1,46 @@
 # MPFD Code Supplement
 
-Reproducibility code for the Short Communication
+Reproducibility code for two papers:
 
-**Mixed-Parity Fractional Dictionaries for Moment-Based Discrimination** (S. Zabolotnii, 2026)
+1. **Where the contamination enters decides how a Fisher moment detector fails**
+   (S. Zabolotnii, 2026) -- `study/reframe/`, `paper/reframe/`, `lean/MCP/Reframe.lean`;
+   see the section "Contamination paper" below.
+2. **Mixed-Parity Fractional Dictionaries for Moment-Based Discrimination** (S. Zabolotnii, 2026),
+   a Short Communication -- everything else in this repository.
+
+## Contamination paper (`study/reframe/`)
+
+Every number in the paper is a macro of `paper/reframe/generated/numbers.tex` or a cell of a
+generated table, and `study/reframe/make_tex_reframe.py` builds them from the stored results only;
+`study/tests/test_reframe_generated.py` fails if the committed fragments are not what the stored
+results give. The figures come from `make_figs_reframe.py`.
+
+| paper | what | files |
+|---|---|---|
+| simulation run 1 (Blocks A, B) | rate and sign of the inadmissible coefficient, clean-window limit, onset of the collapse | `spec_h1v4.py`, `h1v4.py`, design and registered criteria in `DESIGN.md`, results in `results/h1v4-2026-11-22/`, verdicts by `criteria.py` |
+| simulation run 2 | the collapse at practical window lengths, the conditional limit, winsorizing; Student-t3 contaminant | `spec_s2.py`, `h1v4_s2.py`, `DESIGN_S2.md`, `results/h1v4-s2-2026-11-22/`, `criteria_s2.py` |
+| semi-synthetic demonstration | RflyMAD clean laws with a synthetic Pareto contaminant | `h1v4_s2.py` (`rfly_pools`), cells `src=rfly` of run 2 |
+| post-hoc diagnostics | clean drift of the top column, onset censoring, population `K^sub`, competitor, general-`p_+` sign limit, sampler of `H` | `diag_*.py` -> `results/diag_*.json` (not registered; the paper says so) |
+| algebraic lemmas | bordered solve, parity of products, sign of a same-parity sum, positivity parameter, crossover balance | `lean/MCP/Reframe.lean` |
+
+Each run directory holds one JSON file per cell, `MANIFEST.sha256` and `RUN.json`. The runs were
+made with `mc_kernel.py` (vendored here; it runs the controls first and stops if one fails):
+
+```bash
+cd study/reframe
+python3 mc_kernel.py spec_h1v4.py --resume   # hours; cells already present and hashed are reused
+python3 mc_kernel.py spec_s2.py --resume
+python3 criteria.py && python3 criteria_s2.py
+python3 make_tex_reframe.py && python3 make_figs_reframe.py
+```
+
+The RflyMAD cells and two diagnostics need the per-flight series of the no-fault real flights of
+RflyMAD (doi:10.1177/02783649241305153). The dataset is copyrighted by the Reliable Flight Control
+Group, Beihang University, for non-commercial use, and is not redistributed here. Point
+`MPFD_RFLY_CACHE` at the extracted file or place it at `study/reframe/data/ext_cache_f.npz`.
+Without it those cells cannot be recomputed; their stored results are included.
+
+## Short Communication
 
 This repository is deliberately separate from the manuscript repository. It contains the study
 library, the seven pre-registered checks with their frozen JSON results, the exploratory pilots

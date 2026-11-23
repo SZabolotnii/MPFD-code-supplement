@@ -1,0 +1,13 @@
+{
+  "cell": "block=control_ctl=C1__c8ba196f",
+  "params": {
+    "block": "control",
+    "ctl": "C1"
+  },
+  "seconds": 1.291,
+  "values": {
+    "auc": 0.7933250727404438,
+    "err": 4.89199025732745e-09
+  },
+  "written": "2026-11-22T08:51:46+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "cell": "block=control_ctl=C3__36aafc35",
+  "params": {
+    "block": "control",
+    "ctl": "C3"
+  },
+  "seconds": 0.004,
+  "values": {
+    "lambda_m": 0.6066538913333955,
+    "maxerr": 4.996003610813204e-16
+  },
+  "written": "2026-11-22T08:51:54+00:00"
+}

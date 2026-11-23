@@ -7,6 +7,9 @@ lean/.lake/
 # never mirror manuscript-side documents into the public supplement
 *.pdf
 !paper/figs/*.pdf
+!paper/reframe/figs/*.pdf
+# RflyMAD is not redistributable; the extracted series stay local
+study/reframe/data/
 !lean/**
 paper/*.txt
 paper/*.md

@@ -1,0 +1,66 @@
+{
+ "oe_a2.4_p0.5": {
+  "dict": "oe",
+  "astar": 2.4,
+  "pplus": 0.5,
+  "ks_old_new": 0.0,
+  "max_abs_diff": 0.0,
+  "median_abs_H": 0.3695892128346917
+ },
+ "oe_a2.4_p0.8": {
+  "dict": "oe",
+  "astar": 2.4,
+  "pplus": 0.8,
+  "ks_old_new": 0.00039999999999995595,
+  "max_abs_diff": 0.004662399589891564,
+  "median_abs_H": 1.4839631954747885
+ },
+ "oe_a4.0_p0.5": {
+  "dict": "oe",
+  "astar": 4.0,
+  "pplus": 0.5,
+  "ks_old_new": 0.0,
+  "max_abs_diff": 0.0,
+  "median_abs_H": 0.40731735380146805
+ },
+ "oe_a4.0_p0.8": {
+  "dict": "oe",
+  "astar": 4.0,
+  "pplus": 0.8,
+  "ks_old_new": 0.00014999999999998348,
+  "max_abs_diff": 0.0013614309804914626,
+  "median_abs_H": 0.5935566257297308
+ },
+ "eo_a2.4_p0.5": {
+  "dict": "eo",
+  "astar": 2.4,
+  "pplus": 0.5,
+  "ks_old_new": 0.0,
+  "max_abs_diff": 0.0,
+  "median_abs_H": 0.38881744447173255
+ },
+ "eo_a2.4_p0.8": {
+  "dict": "eo",
+  "astar": 2.4,
+  "pplus": 0.8,
+  "ks_old_new": 0.000300000000000078,
+  "max_abs_diff": 0.002783017498233953,
+  "median_abs_H": 1.1201899415633094
+ },
+ "eo_a4.0_p0.5": {
+  "dict": "eo",
+  "astar": 4.0,
+  "pplus": 0.5,
+  "ks_old_new": 0.0,
+  "max_abs_diff": 0.0,
+  "median_abs_H": 0.41736473245571015
+ },
+ "eo_a4.0_p0.8": {
+  "dict": "eo",
+  "astar": 4.0,
+  "pplus": 0.8,
+  "ks_old_new": 0.00014999999999998348,
+  "max_abs_diff": 0.00032990277692412917,
+  "median_abs_H": 0.5966224023471646
+ }
+}
