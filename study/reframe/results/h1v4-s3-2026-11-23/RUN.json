@@ -1,0 +1,16 @@
+{
+  "run_id": "h1v4-s3-2026-11-23",
+  "spec": "study/reframe/spec_s3.py",
+  "spec_git": "02aa286",
+  "finished": "2026-11-23T09:42:58+00:00",
+  "python": "3.13.12",
+  "cells_total": 40,
+  "cells_computed": 40,
+  "cells_reused": 0,
+  "grid_seconds": 3205.5,
+  "controls": [
+    "C11 Pareto(alpha) sampler, tails and moments",
+    "C12 stable CDF vs LePage at the new gamma",
+    "C13 S3 engine reproduces run 2 at alpha_c = 3"
+  ]
+}

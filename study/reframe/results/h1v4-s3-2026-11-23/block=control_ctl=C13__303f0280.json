@@ -1,0 +1,18 @@
+{
+  "cell": "block=control_ctl=C13__303f0280",
+  "params": {
+    "block": "control",
+    "ctl": "C13"
+  },
+  "seconds": 7.405,
+  "values": {
+    "maxdiff": 0.0,
+    "s3_Kt": -1.071512140628382e-05,
+    "s3_N_on": 908.5602964160694,
+    "s3_Nstar": 1237.5307559648713,
+    "s3_aucS_end": 1.0,
+    "s3_aucW_end": 1.0,
+    "s3_auc_end": 0.498
+  },
+  "written": "2026-11-23T08:49:32+00:00"
+}

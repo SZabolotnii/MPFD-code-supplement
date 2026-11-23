@@ -19,6 +19,7 @@ results give. The figures come from `make_figs_reframe.py`.
 |---|---|---|
 | simulation run 1 (Blocks A, B) | rate and sign of the inadmissible coefficient, clean-window limit, onset of the collapse | `spec_h1v4.py`, `h1v4.py`, design and registered criteria in `DESIGN.md`, results in `results/h1v4-2026-11-22/`, verdicts by `criteria.py` |
 | simulation run 2 | the collapse at practical window lengths, the conditional limit, winsorizing; Student-t3 contaminant | `spec_s2.py`, `h1v4_s2.py`, `DESIGN_S2.md`, `results/h1v4-s2-2026-11-22/`, `criteria_s2.py` |
+| simulation run 3 | heavier contaminants (`alpha_c` 1.2 and 1.5), interior test skewness and the reverse one-sided split, the training-size rate in two-column dictionaries with equal class scales | `spec_s3.py`, `h1v4_s3.py`, `design_probe_s3.py`, `DESIGN_S3.md`, `results/h1v4-s3-2026-11-23/`, `criteria_s3.py` |
 | semi-synthetic demonstration | RflyMAD clean laws with a synthetic Pareto contaminant | `h1v4_s2.py` (`rfly_pools`), cells `src=rfly` of run 2 |
 | post-hoc diagnostics | clean drift of the top column, onset censoring, population `K^sub`, competitor, general-`p_+` sign limit, sampler of `H` | `diag_*.py` -> `results/diag_*.json` (not registered; the paper says so) |
 | algebraic lemmas | bordered solve, parity of products, sign of a same-parity sum, positivity parameter, crossover balance | `lean/MCP/Reframe.lean` |
@@ -30,7 +31,8 @@ made with `mc_kernel.py` (vendored here; it runs the controls first and stops if
 cd study/reframe
 python3 mc_kernel.py spec_h1v4.py --resume   # hours; cells already present and hashed are reused
 python3 mc_kernel.py spec_s2.py --resume
-python3 criteria.py && python3 criteria_s2.py
+python3 mc_kernel.py spec_s3.py --resume     # about one hour
+python3 criteria.py && python3 criteria_s2.py && python3 criteria_s3.py
 python3 make_tex_reframe.py && python3 make_figs_reframe.py
 ```
 

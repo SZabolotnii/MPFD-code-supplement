@@ -17,9 +17,11 @@ HERE = Path(__file__).resolve().parent
 RES = HERE / "results"
 R1 = RES / "h1v4-2026-11-22"
 R2 = RES / "h1v4-s2-2026-11-22"
+R3 = RES / "h1v4-s3-2026-11-23"
 PAPER = HERE.parent.parent / "paper" / "reframe"
 OUT = PAPER / "generated"
-FILES = ("numbers.tex", "tab_criteria.tex", "tab_fast.tex", "tab_slow.tex", "tab_s2.tex")
+FILES = ("numbers.tex", "tab_criteria.tex", "tab_fast.tex", "tab_slow.tex", "tab_s2.tex",
+         "tab_s3a.tex", "tab_s3b.tex")
 DICT_ORDER = ("oo", "ee", "oe", "eo")
 DICT_TEX = {"oo": r"$\mathsf{oo}$", "ee": r"$\mathsf{ee}$", "oe": r"$\mathsf{oe}$", "eo": r"$\mathsf{eo}$"}
 
@@ -62,6 +64,10 @@ def build(out_dir: Path, claims_path: Path | None = None) -> None:
     B = {c["params"]["dict"]: c for c in c1 if c["params"].get("block") == "B"}
     X = [c for c in c2 if c["params"].get("block") == "X"]
     T = {c["params"]["dict"]: c for c in c2 if c["params"].get("block") == "T"}
+    c3 = _cells(R3)
+    SA = [c for c in c3 if c["params"].get("block") == "A"]
+    SB = [c for c in c3 if c["params"].get("block") == "B"]
+    SC = {c["params"]["dict"]: c for c in c3 if c["params"].get("block") == "C"}
     C2 = {c["params"]["ctl"]: c for c in c2 if c["params"].get("block") == "control"}
     d1 = json.loads((RES / "diag_competitor.json").read_text())
     d2 = json.loads((RES / "diag_clean_mean.json").read_text())
@@ -157,6 +163,8 @@ def build(out_dir: Path, claims_path: Path | None = None) -> None:
     diffs = [abs(v["med_ratio_eff"] - v["stored_onset_ratio"]) for _, _, v in rows]
     match = sum(x <= 0.02 for x in diffs)
     bk.add("rfDriftMatch", str(match), match, [fd4], "count dict x n with |med N*_eff/N* - stored ratio| <= 0.02")
+    drop = max(40 - v[f"n{n}"]["n_ok"] for v in d4.values() for n in (50, 200, 1000))
+    bk.add("rfDriftDropMax", str(drop), drop, [fd4], "max replications (of 40) with mu_eff <= 0, left out")
     bk.add("rfDriftCells", str(len(rows)), len(rows), [fd4], "count dict x n cells, Block B")
     v = d4["oe"]["n1000"]["med_ratio_eff"]
     bk.add("rfDriftOe", f(v, 3), v, [fd4], "oe n=1000 median N*_eff/N*")
@@ -246,6 +254,83 @@ def build(out_dir: Path, claims_path: Path | None = None) -> None:
             bk.add(f"rfSignObs{tag}Lo", f(min(obs), 2), min(obs), [fd7], f"min pos_n128000, {dct} a*={a_}, p+=4/5")
             bk.add(f"rfSignObs{tag}Hi", f(max(obs), 2), max(obs), [fd7], f"max pos_n128000, {dct} a*={a_}, p+=4/5")
 
+    # ---------------- 5 % two-sample-free KS critical value for the 300 Block A replications
+    # (asymptotic one-sample value 1.358/sqrt(R); R = 300 is the design constant R_A of h1v4.py)
+    ra = 300
+    kc = 1.358 / ra ** 0.5
+    bk.add("rfKsCrit", f(kc, 2), kc, [], "1.358/sqrt(300), asymptotic 5% one-sample KS critical value, R_A = 300")
+    # ---------------- K^sub_{l*} of ee on the Gaussian and RflyMAD training mixtures (diag_s2_ksub.py)
+    for src, nm in (("gauss", "Gauss"), ("rfly", "Rfly")):
+        v = d5[f"{src}_ee"]["Ksub_lstar"]
+        bk.add(f"rfKsubLstar{nm}Ee", f(v, 2), v, [fd5], f"Ksub_l* of ee, {src} training mixtures, a* = 8")
+    # ---------------- run-2 grid: size and integer end point, as stored with each cell
+    grids = {tuple(c["values"]["N_grid"]) for c in X}
+    assert len(grids) == 1, len(grids)
+    grid = next(iter(grids))
+    bk.add("rfNgridS", str(len(grid)), len(grid), [X[0]["file"]], "number of N values in the run-2 grid")
+    bk.add("rfNmaxSint", g(grid[-1]), grid[-1], [X[0]["file"]], "last N of the run-2 grid (round(10^4.5))")
+
+    # ---------------- run 3 controls
+    C3 = {c["params"]["ctl"]: c for c in c3 if c["params"].get("block") == "control"}
+    bk.add("rfCtlSthreeZ", f(C3["C11"]["values"]["maxz"], 2), C3["C11"]["values"]["maxz"], [C3["C11"]["file"]],
+           "C11 max |z|, Pareto(alpha) sampler")
+    bk.add("rfCtlSthreeErr", f(C3["C12"]["values"]["maxerr"], 4), C3["C12"]["values"]["maxerr"], [C3["C12"]["file"]],
+           "C12 max error, stable CDF vs LePage at new gamma")
+    bk.add("rfCtlSthreeDiff", f(C3["C13"]["values"]["maxdiff"], 0), C3["C13"]["values"]["maxdiff"], [C3["C13"]["file"]],
+           "C13 max difference, S3 engine vs run-2 engine")
+    oe_drop = 40 - d4["oe"]["n1000"]["n_ok"]
+    bk.add("rfDriftDropOeThousand", str(oe_drop), oe_drop, [fd4], "replications left out, oe n = 1000")
+
+    # ---------------- run 3 (S3, DESIGN_S3.md)
+    sa_sym = [c for c in SA if c["params"]["te"] == "sym"]
+    sa_one = [c for c in SA if c["params"]["te"] == "one"]
+    fs = lambda cs: [c["file"] for c in cs]
+    r1 = [c for c in sa_sym if c["values"]["medPeak"] >= 0.80 and c["values"]["onFinite"] >= 0.80
+          and c["values"]["medNon"] <= 2e4]
+    bk.add("rfRonePass", str(len(r1)), len(r1), fs(sa_sym), "count R1 pass, S3-A symmetric")
+    bk.add("rfRoneN", str(len(sa_sym)), len(sa_sym), fs(sa_sym), "count S3-A symmetric cells")
+    bk.add("rfRthreeN", str(len(sa_one) + len(SB)), len(sa_one) + len(SB), fs(sa_one + SB), "count R3 cells")
+    rat = [c["values"]["ratio"] for c in sa_sym]
+    bk.add("rfSthreeRatioLo", f(min(rat), 2), min(rat), fs(sa_sym), "min onset ratio, S3-A symmetric")
+    bk.add("rfSthreeRatioHi", f(max(rat), 2), max(rat), fs(sa_sym), "max onset ratio, S3-A symmetric")
+    non = [c["values"]["medNon"] for c in sa_sym]
+    bk.add("rfSthreeNonLo", g(min(non)), min(non), fs(sa_sym), "min median N_on, S3-A symmetric")
+    bk.add("rfSthreeNonHi", g(max(non)), max(non), fs(sa_sym), "max median N_on, S3-A symmetric")
+    onf = [c["values"]["onFinite"] for c in sa_sym]
+    bk.add("rfSthreeOnFinLo", f(min(onf), 2), min(onf), fs(sa_sym), "min share N_on finite, S3-A symmetric")
+    pe = max(c["values"]["predErr"] for c in sa_one + SB)
+    bk.add("rfSthreePredErrMax", f(pe, 3), pe, fs(sa_one + SB), "max predErr over R3 cells")
+    for te, nm in (("in+", "InPlus"), ("in-", "InMinus")):
+        cs = [c for c in SB if c["params"]["te"] == te]
+        ob = [c["values"]["medAucEnd"] for c in cs]
+        pr = [c["values"]["medPred"] for c in cs]
+        bk.add(f"rf{nm}ObsLo", f(min(ob), 2), min(ob), fs(cs), f"min medAucEnd, S3-B {te}")
+        bk.add(f"rf{nm}ObsHi", f(max(ob), 2), max(ob), fs(cs), f"max medAucEnd, S3-B {te}")
+        bk.add(f"rf{nm}PredLo", f(min(pr), 2), min(pr), fs(cs), f"min medPred, S3-B {te}")
+        bk.add(f"rf{nm}PredHi", f(max(pr), 2), max(pr), fs(cs), f"max medPred, S3-B {te}")
+    for te, nm in (("in+", "InPlus"), ("in-", "InMinus"), ("rev10", "RevTen"), ("rev40", "RevForty")):
+        for d in ("ee", "oe"):
+            c = next(c for c in SB if c["params"]["te"] == te and c["params"]["dict"] == d)
+            v = c["values"]["pos"]
+            bk.add(f"rf{nm}Pos{d.capitalize()}", f(v, 2), v, [c["file"]], f"share K_t > 0, S3-B {te} {d}")
+    rev_ee = [c for c in SB if c["params"]["te"].startswith("rev") and c["params"]["dict"] == "ee"]
+    re_ = min(c["values"]["medAucEnd"] for c in rev_ee)
+    bk.add("rfRevEeEndMin", f(re_, 2), re_, fs(rev_ee), "min medAucEnd, ee reverse splits")
+    allx = SA + SB
+    wm = min(c["values"]["medAucWEnd"] for c in allx)
+    bk.add("rfSthreeWinsMin", f(wm, 3), wm, fs(allx), "min winsorized medAucEnd, all S3 crossover cells")
+    cm = min(c["values"]["medCostW10"] for c in allx)
+    bk.add("rfSthreeCostMin", f(cm, 3), cm, fs(allx), "min medCostW10, all S3 crossover cells")
+    for d, nm in (("oo4", "Same"), ("oe4", "Opp")):
+        v = SC[d]["values"]
+        bk.add(f"rfRateSlope{nm}", f(v["slope"], 2), v["slope"], [SC[d]["file"]], f"S3-C slope, {d}")
+    bk.add("rfRateKs", f(SC["oo4"]["values"]["ks_H"], 3), SC["oo4"]["values"]["ks_H"], [SC["oo4"]["file"]],
+           "S3-C ks_H, oo4, n = 512000")
+    bk.add("rfRateLock", f(SC["oo4"]["values"]["lock_n512000"], 2), SC["oo4"]["values"]["lock_n512000"],
+           [SC["oo4"]["file"]], "S3-C lock, oo4, n = 512000")
+    bk.add("rfRatePos", f(SC["oe4"]["values"]["pos_n512000"], 2), SC["oe4"]["values"]["pos_n512000"],
+           [SC["oe4"]["file"]], "S3-C P(K_t>0), oe4, n = 512000")
+
     # ---------------- worst control values (Appendix B), runs 1 and 2
     C1c = {c["params"]["ctl"]: c for c in c1 if c["params"].get("block") == "control"}
     e1 = abs(C1c["C1"]["values"]["err"])
@@ -273,10 +358,12 @@ def build(out_dir: Path, claims_path: Path | None = None) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     head = "% generated by study/reframe/make_tex_reframe.py -- do not edit\n"
     (out_dir / "numbers.tex").write_text(head + "\n".join(bk.macros) + "\n")
-    (out_dir / "tab_criteria.tex").write_text(head + tab_criteria(A, B, X, T, p1_pass, p4_pass, q1))
+    (out_dir / "tab_criteria.tex").write_text(head + tab_criteria(A, B, X, T, p1_pass, p4_pass, q1, SA, SB, SC))
     (out_dir / "tab_fast.tex").write_text(head + tab_fast(A, B))
     (out_dir / "tab_slow.tex").write_text(head + tab_slow(A, B))
     (out_dir / "tab_s2.tex").write_text(head + tab_s2(X))
+    (out_dir / "tab_s3a.tex").write_text(head + tab_s3a(SA))
+    (out_dir / "tab_s3b.tex").write_text(head + tab_s3b(SA, SB))
     if claims_path is not None:
         write_claims(claims_path, bk)
 
@@ -287,7 +374,7 @@ def sci(x: float) -> str:
     return rf"{m:.1f}\cdot 10^{e}" if 0 <= e < 10 else rf"{m:.1f}\cdot 10^{{{e}}}"
 
 
-def tab_criteria(A, B, X, T, p1, p4, q1) -> str:
+def tab_criteria(A, B, X, T, p1, p4, q1, SA, SB, SC) -> str:
     same = [c for c in A if c["values"]["same_parity"] == 1.0]
     p2 = sum(c["values"]["dauc_n128000"] <= 0.01 and c["values"]["dauc_n128000"] < c["values"]["dauc_n500"] for c in A)
     p3 = sum(c["values"]["lock_n128000"] >= 0.95 for c in same)
@@ -313,10 +400,26 @@ def tab_criteria(A, B, X, T, p1, p4, q1) -> str:
         ("Q5a", r"winsorized $\mathrm{AUC}_{N_{\max}}\ge 0.90$", q5a, len(sym)),
         ("Q5b", r"winsorized minus sub-dictionary $\mathrm{AUC}_{10}\ge -0.02$ (clean)", q5b, len(sym)),
     ]
+    s_sym = [c for c in SA if c["params"]["te"] == "sym"]
+    s_r3 = [c for c in SA if c["params"]["te"] == "one"] + SB
+    sv = lambda c: c["values"]
+    rows += [
+        ("R1", r"as Q1, $\alpha_c\in\{1.2,1.5\}$, $a^*\in\{3,4\}$",
+         sum(sv(c)["medPeak"] >= 0.80 and sv(c)["onFinite"] >= 0.80 and sv(c)["medNon"] <= 2e4 for c in s_sym), len(s_sym)),
+        ("R2", r"as Q2, same cells", sum(0.67 <= sv(c)["ratio"] <= 1.5 for c in s_sym), len(s_sym)),
+        ("R3", r"as Q3, one-sided, interior $\bte$ and reverse splits", sum(sv(c)["predErr"] <= 0.10 for c in s_r3), len(s_r3)),
+        ("R4", r"as Q5a and Q5b", sum(sv(c)["medAucWEnd"] >= 0.90 and sv(c)["medCostW10"] >= -0.02 for c in s_sym), len(s_sym)),
+        ("R5", r"two columns, equal scales: slope within $0.10$ of $-(a^*-a_L)/\alpha_c$",
+         sum(abs(sv(c)["slope_err"]) <= 0.10 for c in SC.values()), len(SC)),
+        ("R6", r"same parity: lock $\ge 0.95$, Kolmogorov distance to $H\le 0.08$",
+         int(sv(SC["oo4"])["lock_n512000"] >= 0.95 and sv(SC["oo4"])["ks_H"] <= 0.08), 1),
+        ("R7", r"opposite parity: $|\hat P\{\hat K_t>0\}-\tfrac12|\le 0.087$",
+         int(abs(sv(SC["oe4"])["pos_n512000"] - 0.5) <= 0.087), 1),
+    ]
     body = [r"\begin{tabular}{@{}llrl@{}}", r"\toprule",
             r"& criterion (registered before the run) & cells & verdict \\", r"\midrule"]
     for i, (k, txt, ok, tot) in enumerate(rows):
-        if k == "Q1":
+        if k in ("Q1", "R1"):
             body.append(r"\midrule")
         body.append(rf"{k} & {txt} & {ok}/{tot} & {'pass' if ok == tot else r'\textbf{fail}'} \\")
     body += [r"\bottomrule", r"\end{tabular}"]
@@ -357,6 +460,50 @@ def tab_slow(A, B) -> str:
             pos.append(rf"{f(min(ps), 2)}\,\ldots\,{f(max(ps), 2)}")
         v = B[d]["values"]
         body.append(rf"{DICT_TEX[d]} & {cells[0]} & {cells[1]} & {pos[0]} & {pos[1]} & {f(v['slope'], 2)} & {f(v['slope_pred'], 2)} \\")
+    body += [r"\bottomrule", r"\end{tabular}"]
+    return "\n".join(body) + "\n"
+
+
+def tab_s3a(SA) -> str:
+    """Run 3, block A, symmetric test contamination: one row per cell."""
+    body = [r"\begin{tabular}{@{}rrlrccrrcc@{}}", r"\toprule",
+            r"$\alpha_c$ & $a^*$ & dict. & $n$ & peak & onset found & median $N_{\mathrm{on}}$ & median $N^*_n(\hat K)$ & ratio & winsorized \\",
+            r"\midrule"]
+    rows = sorted([c for c in SA if c["params"]["te"] == "sym"],
+                  key=lambda c: (c["params"]["alpha"], c["params"]["astar"], c["params"]["n"],
+                                 DICT_ORDER.index(c["params"]["dict"])))
+    last = None
+    for c in rows:
+        p, v = c["params"], c["values"]
+        grp = (p["alpha"], p["astar"], p["n"])
+        if last is not None and grp != last:
+            body.append(r"\addlinespace")
+        last = grp
+        body.append(rf"{p['alpha']:g} & {p['astar']:g} & {DICT_TEX[p['dict']]} & {p['n']} & {v['medPeak']:.2f} & "
+                    rf"{v['onFinite']:.2f} & {g(v['medNon'])} & {g(v['medNstar'])} & {v['ratio']:.2f} & {v['medAucWEnd']:.3f} \\")
+    body += [r"\bottomrule", r"\end{tabular}"]
+    return "\n".join(body) + "\n"
+
+
+def tab_s3b(SA, SB) -> str:
+    """Run 3, cells of criterion R3: skewed test contamination. Per-fit limit check."""
+    te_tex = {"one": r"$(0.10, 0)$", "in+": r"$(0.3, 0.1)$", "in-": r"$(0.1, 0.3)$",
+              "rev10": r"$(0, 0.1)$", "rev40": r"$(0, 0.4)$"}
+    body = [r"\begin{tabular}{@{}rrlrlrcccc@{}}", r"\toprule",
+            r"$\alpha_c$ & $a^*$ & dict. & $n$ & test split & $\bte$ & $\hat P\{\hat K_t > 0\}$ & median $\mathrm{AUC}_{N_{\max}}$ & median pred. & median error \\",
+            r"\midrule"]
+    rows = sorted([c for c in SA if c["params"]["te"] == "one"] + SB,
+                  key=lambda c: (c["params"]["block"], c["params"]["alpha"], c["params"]["astar"], c["params"]["n"],
+                                 list(te_tex).index(c["params"]["te"]), DICT_ORDER.index(c["params"]["dict"])))
+    last = None
+    for c in rows:
+        p, v = c["params"], c["values"]
+        grp = (p["block"], p["alpha"], p["astar"], p["n"])
+        if last is not None and grp != last:
+            body.append(r"\addlinespace")
+        last = grp
+        body.append(rf"{p['alpha']:g} & {p['astar']:g} & {DICT_TEX[p['dict']]} & {p['n']} & {te_tex[p['te']]} & "
+                    rf"{v['beta_te']:+.1f} & {v['pos']:.2f} & {v['medAucEnd']:.2f} & {v['medPred']:.2f} & {v['predErr']:.3f} \\")
     body += [r"\bottomrule", r"\end{tabular}"]
     return "\n".join(body) + "\n"
 

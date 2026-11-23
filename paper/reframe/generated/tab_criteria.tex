@@ -15,5 +15,13 @@ Q3 & one-sided: $|\mathrm{AUC}_{N_{\max}}-\mathrm{pred}|\le 0.10$ & 12/12 & pass
 Q4 & Student-$t_3$ contaminant: lock $\ge 0.95$, $|\Delta\mathrm{AUC}_{10}|\le 0.01$ & 3/3 & pass \\
 Q5a & winsorized $\mathrm{AUC}_{N_{\max}}\ge 0.90$ & 18/18 & pass \\
 Q5b & winsorized minus sub-dictionary $\mathrm{AUC}_{10}\ge -0.02$ (clean) & 18/18 & pass \\
+\midrule
+R1 & as Q1, $\alpha_c\in\{1.2,1.5\}$, $a^*\in\{3,4\}$ & 18/20 & \textbf{fail} \\
+R2 & as Q2, same cells & 20/20 & pass \\
+R3 & as Q3, one-sided, interior $\bte$ and reverse splits & 18/18 & pass \\
+R4 & as Q5a and Q5b & 20/20 & pass \\
+R5 & two columns, equal scales: slope within $0.10$ of $-(a^*-a_L)/\alpha_c$ & 2/2 & pass \\
+R6 & same parity: lock $\ge 0.95$, Kolmogorov distance to $H\le 0.08$ & 1/1 & pass \\
+R7 & opposite parity: $|\hat P\{\hat K_t>0\}-\tfrac12|\le 0.087$ & 1/1 & pass \\
 \bottomrule
 \end{tabular}
