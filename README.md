@@ -20,7 +20,8 @@ results give. The figures come from `make_figs_reframe.py`.
 | simulation run 1 (Blocks A, B) | rate and sign of the inadmissible coefficient, clean-window limit, onset of the collapse | `spec_h1v4.py`, `h1v4.py`, design and registered criteria in `DESIGN.md`, results in `results/h1v4-2026-11-22/`, verdicts by `criteria.py` |
 | simulation run 2 | the collapse at practical window lengths, the conditional limit, winsorizing; Student-t3 contaminant | `spec_s2.py`, `h1v4_s2.py`, `DESIGN_S2.md`, `results/h1v4-s2-2026-11-22/`, `criteria_s2.py` |
 | simulation run 3 | heavier contaminants (`alpha_c` 1.2 and 1.5), interior test skewness and the reverse one-sided split, the training-size rate in two-column dictionaries with equal class scales | `spec_s3.py`, `h1v4_s3.py`, `design_probe_s3.py`, `DESIGN_S3.md`, `results/h1v4-s3-2026-11-23/`, `criteria_s3.py` |
-| semi-synthetic demonstration | RflyMAD clean laws with a synthetic Pareto contaminant | `h1v4_s2.py` (`rfly_pools`), cells `src=rfly` of run 2 |
+| simulation run 4 | runs 2 and 3 recomputed with their seeds and per-fit values (dispersion, fixed-window check), `(x, x^3)` and `(x, |x|^3)` at `alpha_c` 2.2 and 2.5, a locked interior-skewness cell, RflyMAD in the run-3 regime, scale-only clean laws | `spec_s4.py`, `h1v4_s4.py`, `design_probe_s4.py`, `DESIGN_S4.md`, `results/h1v4-s4-2026-11-24/`, `criteria_s4.py` |
+| semi-synthetic demonstration | RflyMAD clean laws with a synthetic Pareto contaminant | `h1v4_s2.py` (`rfly_pools`), cells `src=rfly` of runs 2 and 4 |
 | post-hoc diagnostics | clean drift of the top column, onset censoring, population `K^sub`, competitor, general-`p_+` sign limit, sampler of `H` | `diag_*.py` -> `results/diag_*.json` (not registered; the paper says so) |
 | algebraic lemmas | bordered solve, parity of products, sign of a same-parity sum, positivity parameter, crossover balance | `lean/MCP/Reframe.lean` |
 

@@ -23,5 +23,17 @@ R4 & as Q5a and Q5b & 20/20 & pass \\
 R5 & two columns, equal scales: slope within $0.10$ of $-(a^*-a_L)/\alpha_c$ & 2/2 & pass \\
 R6 & same parity: lock $\ge 0.95$, Kolmogorov distance to $H\le 0.08$ & 1/1 & pass \\
 R7 & opposite parity: $|\hat P\{\hat K_t>0\}-\tfrac12|\le 0.087$ & 1/1 & pass \\
+\midrule
+D0 & runs 2--3 re-run with their seeds: the stored medians are reproduced & 68/68 & pass \\
+D1 & Q2/R2 cells: per-fit onset ratio, $q_{25}\ge 0.5$ and $q_{75}\le 2$ & 34/34 & pass \\
+D2 & Q3/R3 cells: per-fit $|\mathrm{AUC}_{N_{\max}}-\mathrm{pred}|$, $p_{90}\le 0.15$ & 30/30 & pass \\
+D3 & Q2/R2 cells: fixed $N\ge 10^3$, $|\text{mean AUC}_N-\text{mean }\Psi|\le 0.05$ & 34/34 & pass \\
+A1 & $(x,x^3)$, $(x,|x|^3)$, $\alpha_c\in\{2.2,2.5\}$, symmetric: as R1 and R2 & 0/5 & \textbf{fail} \\
+A2 & $(x,|x|^3)$, one-sided: as R3 & 3/3 & pass \\
+B1 & $\dict{ee}$, $n=1000$, $\bte=\pm\tfrac12$: lock $\ge 0.95$, as R3, side of $\tfrac12$ & 2/2 & pass \\
+C1 & RflyMAD, $\alpha_c\in\{1.2,1.5\}$, symmetric: as R1 and R2 & 7/10 & \textbf{fail} \\
+C2 & RflyMAD, one-sided: as R3 & 8/8 & pass \\
+C3 & RflyMAD, symmetric: as R4 & 10/10 & pass \\
+E1 & scale-only clean laws, $\mu^{\mathrm{te}}_L>0$ splits: as R3 & 3/3 & pass \\
 \bottomrule
 \end{tabular}

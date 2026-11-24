@@ -1,0 +1,92 @@
+{
+ "oe3_al2.2_n1000_sym20": {
+  "file": "alpha=2.2_block=A4_dict=oe3_n=1000_te=sym20__10d97609.json",
+  "clean_top_diff": 1.7531470224515269,
+  "n_onset": 18,
+  "n_onset_eff_defined": 18,
+  "ratio_q": [
+   1.6991786297351914,
+   2.564610204529804,
+   3.4937813748378366
+  ],
+  "ratio_eff_q": [
+   0.6587968944949889,
+   0.7724201966369391,
+   1.2609244380543065
+  ],
+  "share_mu_eff_nonpos": 0.0,
+  "pos": 0.7
+ },
+ "oe3_al2.2_n200_sym05": {
+  "file": "alpha=2.2_block=A4_dict=oe3_n=200_te=sym05__2d1922e5.json",
+  "clean_top_diff": 2.081862089161188,
+  "n_onset": 9,
+  "n_onset_eff_defined": 9,
+  "ratio_q": [
+   31.84608975470138,
+   70.14523095206847,
+   187.72213568060764
+  ],
+  "ratio_eff_q": [
+   0.8025249961754254,
+   0.8995041861948163,
+   1.180213231409782
+  ],
+  "share_mu_eff_nonpos": 0.0,
+  "pos": 0.775
+ },
+ "oo3_al2.2_n200_sym20": {
+  "file": "alpha=2.2_block=A4_dict=oo3_n=200_te=sym20__cd6805a6.json",
+  "clean_top_diff": 1.2383999999999997,
+  "n_onset": 19,
+  "n_onset_eff_defined": 19,
+  "ratio_q": [
+   0.5204474909592374,
+   0.7438955305481544,
+   0.9501952305367102
+  ],
+  "ratio_eff_q": [
+   0.5708401911864309,
+   0.7666952132302858,
+   1.176035500961431
+  ],
+  "share_mu_eff_nonpos": 0.05,
+  "pos": 0.425
+ },
+ "oe3_al2.5_n1000_sym20": {
+  "file": "alpha=2.5_block=A4_dict=oe3_n=1000_te=sym20__10fc8c03.json",
+  "clean_top_diff": 1.7531470224515269,
+  "n_onset": 15,
+  "n_onset_eff_defined": 15,
+  "ratio_q": [
+   50.67398730878878,
+   91.26008821480848,
+   315.62920463464997
+  ],
+  "ratio_eff_q": [
+   0.900697293019346,
+   1.107255889638717,
+   1.3918886708403218
+  ],
+  "share_mu_eff_nonpos": 0.0,
+  "pos": 0.9
+ },
+ "oo3_al2.5_n200_sym20": {
+  "file": "alpha=2.5_block=A4_dict=oo3_n=200_te=sym20__fa9d7b93.json",
+  "clean_top_diff": 1.2383999999999997,
+  "n_onset": 16,
+  "n_onset_eff_defined": 16,
+  "ratio_q": [
+   0.13881676153522132,
+   2.102467840267062,
+   9.173182416552368
+  ],
+  "ratio_eff_q": [
+   0.46565016091254097,
+   0.5950434075563769,
+   1.3114135224822352
+  ],
+  "share_mu_eff_nonpos": 0.0,
+  "pos": 0.525
+ }
+}

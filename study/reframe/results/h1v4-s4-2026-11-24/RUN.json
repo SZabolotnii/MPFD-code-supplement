@@ -1,0 +1,15 @@
+{
+  "run_id": "h1v4-s4-2026-11-24",
+  "spec": "study/reframe/spec_s4.py",
+  "spec_git": "0e8fb15",
+  "finished": "2026-11-24T14:56:52+00:00",
+  "python": "3.13.12",
+  "cells_total": 102,
+  "cells_computed": 102,
+  "cells_reused": 0,
+  "grid_seconds": 5369.2,
+  "controls": [
+    "C14 the S4 summary reproduces a stored run-3 cell (same seeds)",
+    "C15 the S4 summary reproduces a stored run-2 RflyMAD cell (same seeds)"
+  ]
+}
