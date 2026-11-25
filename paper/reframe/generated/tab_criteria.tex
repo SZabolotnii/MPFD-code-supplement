@@ -35,5 +35,12 @@ C1 & RflyMAD, $\alpha_c\in\{1.2,1.5\}$, symmetric: as R1 and R2 & 7/10 & \textbf
 C2 & RflyMAD, one-sided: as R3 & 8/8 & pass \\
 C3 & RflyMAD, symmetric: as R4 & 10/10 & pass \\
 E1 & scale-only clean laws, $\mu^{\mathrm{te}}_L>0$ splits: as R3 & 3/3 & pass \\
+\midrule
+F1 & Cor.~\ref{cor:detwindow}, $n=512\,000$: Kolmogorov distance of $\mathrm{AUC}_{N_n}$ to the limit law $\le 0.10$ & 4/4 & pass \\
+F2 & same cells: $|\text{mean AUC}_{N_n}-\E\Psi|\le 0.03$ & 4/4 & pass \\
+F3 & all $n$: median per-fit $|\mathrm{AUC}_{N_n}-\Psi(x_n)|\le 0.01$ & 12/12 & pass \\
+G1 & $(x,|x|^3)$, $\mathrm{sgn}(\hat K_t)\bte=-1$: median $\mathrm{AUC}_{N_{\max}}<\tfrac12$, drop from peak $\ge 0.25$ & 3/3 & pass \\
+G2 & same fits: as R3, prediction from $N^*_n$ & 3/3 & pass \\
+G3 & same fits and two drift cells: as R3, prediction from $N^*_{\mathrm{eff}}$ & 5/5 & pass \\
 \bottomrule
 \end{tabular}

@@ -21,6 +21,7 @@ results give. The figures come from `make_figs_reframe.py`.
 | simulation run 2 | the collapse at practical window lengths, the conditional limit, winsorizing; Student-t3 contaminant | `spec_s2.py`, `h1v4_s2.py`, `DESIGN_S2.md`, `results/h1v4-s2-2026-11-22/`, `criteria_s2.py` |
 | simulation run 3 | heavier contaminants (`alpha_c` 1.2 and 1.5), interior test skewness and the reverse one-sided split, the training-size rate in two-column dictionaries with equal class scales | `spec_s3.py`, `h1v4_s3.py`, `design_probe_s3.py`, `DESIGN_S3.md`, `results/h1v4-s3-2026-11-23/`, `criteria_s3.py` |
 | simulation run 4 | runs 2 and 3 recomputed with their seeds and per-fit values (dispersion, fixed-window check), `(x, x^3)` and `(x, |x|^3)` at `alpha_c` 2.2 and 2.5, a locked interior-skewness cell, RflyMAD in the run-3 regime, scale-only clean laws | `spec_s4.py`, `h1v4_s4.py`, `design_probe_s4.py`, `DESIGN_S4.md`, `results/h1v4-s4-2026-11-24/`, `criteria_s4.py` |
+| simulation run 5 | the limit law of the fixed-window corollary (run-3 two-column fits, exact AUC from the characteristic function at window lengths up to 10^17), and `(x, |x|^3)` under one-sided splits that make the fits collapse; LePage sampler with its tail restored | `spec_s5.py`, `h1v4_s5.py`, `design_probe_s5.py`, `DESIGN_S5.md`, `results/h1v4-s5-2026-11-24/`, `criteria_s5.py` |
 | semi-synthetic demonstration | RflyMAD clean laws with a synthetic Pareto contaminant | `h1v4_s2.py` (`rfly_pools`), cells `src=rfly` of runs 2 and 4 |
 | post-hoc diagnostics | clean drift of the top column, onset censoring, population `K^sub`, competitor, general-`p_+` sign limit, sampler of `H` | `diag_*.py` -> `results/diag_*.json` (not registered; the paper says so) |
 | algebraic lemmas | bordered solve, parity of products, sign of a same-parity sum, positivity parameter, crossover balance | `lean/MCP/Reframe.lean` |
@@ -33,7 +34,10 @@ cd study/reframe
 python3 mc_kernel.py spec_h1v4.py --resume   # hours; cells already present and hashed are reused
 python3 mc_kernel.py spec_s2.py --resume
 python3 mc_kernel.py spec_s3.py --resume     # about one hour
+python3 mc_kernel.py spec_s4.py --resume     # about 1.5 hours
+python3 mc_kernel.py spec_s5.py --resume     # about 3 hours (block F: exact AUC for 1800 fitted vectors)
 python3 criteria.py && python3 criteria_s2.py && python3 criteria_s3.py
+python3 criteria_s4.py && python3 criteria_s5.py
 python3 make_tex_reframe.py && python3 make_figs_reframe.py
 ```
 

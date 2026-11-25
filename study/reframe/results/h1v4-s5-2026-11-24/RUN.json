@@ -1,0 +1,16 @@
+{
+  "run_id": "h1v4-s5-2026-11-24",
+  "spec": "study/reframe/spec_s5.py",
+  "spec_git": "8e3df64",
+  "finished": "2026-11-24T20:45:57+00:00",
+  "python": "3.13.12",
+  "cells_total": 11,
+  "cells_computed": 11,
+  "cells_reused": 0,
+  "grid_seconds": 10302.5,
+  "controls": [
+    "C16 the S5 fits reproduce the stored S3-C median |K_t| (same seeds, all three n, both dictionaries)",
+    "C17 CFEngineClean with the run-1 clean laws equals the run-1 CFEngine",
+    "C18 the compensated LePage sum matches the Gil-Pelaez CDF of Z_{gamma,+-1}"
+  ]
+}
